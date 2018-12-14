@@ -122,12 +122,11 @@ async function runTest( type ) {
     itemAddressValues = [];
     testItemContracts = [];
 
-    const ListContract = await new web3.eth.Contract(settings.abiData.ListContract.abi, settings.addresses.ListContract);
-
     $("#"+type+"-result").html( "" );
 
     if(type === "web3") {
     
+        const ListContract = await new web3.eth.Contract(settings.abiData.ListContract.abi, settings.addresses.ListContract);
         if( settings.request_type === "async") {
             LoadDataAsync( ListContract );
 
@@ -136,48 +135,44 @@ async function runTest( type ) {
 
         }
     } else if(type === "zoom") {
-        LoadDataZoom( ListContract );
+        LoadDataZoom();
     }
 }
 
-async function LoadDataZoom( ListContract ) {
+async function LoadDataZoom() {
     
-    if(settings.provider_url.substr(0, 2) === "ws") {
-        var str = settings.provider_url.split(":");
-        str[0] = str[0].replace("ws", "http");
-        str[1] = str[1].replace(".ws", "");
-        str[1] = str[1].replace("/ws", "");
-        settings.provider_url = str[0]+":"+str[1];
-    }
+    let ZoomProvider;
 
-    const ZoomProvider = new ZoomLibrary.HttpProvider( settings.provider_url );
+    if(settings.provider_url.substr(0, 2) === "ws") {
+        ZoomProvider = new ZoomLibrary.WsProvider( settings.provider_url );
+    } else {
+        ZoomProvider = new ZoomLibrary.HttpProvider( settings.provider_url );
+    }
     ZoomProvider.enableCache(true);
 
-    // const web3 = new Web3( ZoomProvider );
     web3.setProvider(ZoomProvider);
 
     const ZoomLibraryInstance = new ZoomLibrary.Zoom({
         use_reference_calls: false // true if you want to use type 2
     });
     
-    const ZoomQueryBinary = settings.zoom.calls["call_" + settings.item_num].data;
+    const ZoomQueryBinary = ZoomLibraryInstance.toBuffer( settings.zoom.calls["call_" + settings.item_num].data );
 
     // Initialize the Zoom Web3 Contract
     const ZoomContractInstance = await new web3.eth.Contract(settings.abiData.Zoom.abi, settings.addresses.ZoomContract);
 
-    const combinedResult = await ZoomContractInstance.methods.combine(
-        ZoomLibraryInstance.toBuffer( ZoomQueryBinary )
-    ).call();
+    const combinedResult = await ZoomContractInstance.methods.combine( ZoomQueryBinary ).call();
 
     const newDataCache = ZoomLibraryInstance.resultsToCache( combinedResult, ZoomQueryBinary );
-
-    ZoomProvider.setCache( newDataCache );
+    ZoomProvider.setCache(newDataCache);
+    
+    const ListContract = await new web3.eth.Contract(settings.abiData.ListContract.abi, settings.addresses.ListContract);
 
     totalCalls++;
     totalProcessTime += getTime() - startTime;
     updateResult( "zoom" );
 
-    LoadDataAsync( ListContract, true );
+    return LoadDataAsync( ListContract, true );
 }
 
 async function LoadDataAsync( ListContract, zoom = false ) {
@@ -365,11 +360,7 @@ function updateResult( type ) {
     data += "Item Count: " + settings.item_num + "<br />";
     data += "Provider URL: " + settings.provider_url + "<br />";
     data += "Type: " + type + "<br />";
-    if(type === "zoom") {
-        data += "Request Type: HTTP<br />";
-    } else {
-        data += "Request Type: " + settings.request_type+"<br />";
-    }
+    data += "Request Type: " + settings.request_type+"<br />";
     data += "Process Time: " + totalProcessTime / 1000 + "<br />";
     data += "Total Calls: " + totalCalls+"<br />";
     

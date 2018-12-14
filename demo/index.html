@@ -36,26 +36,26 @@
                                     <option value="150">150 ( 3000 calls ) </option>
                                     <option value="100">100 ( 2000 calls ) </option>
                                     <option value="50">50 ( 1000 calls ) </option>
-                                    <option value="25" selected>25 ( 500 calls ) </option>
+                                    <option value="25">25 ( 500 calls ) </option>
                                     <option value="10">10 ( 200 calls ) </option>
-                                    <option value="1">1 ( 20 calls ) </option>
+                                    <option value="1" selected>1 ( 20 calls ) </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputTestType">Request Type</label>
                                 <select id="inputTestType" class="form-control">
-                                    <option value="async">Asynchronous Requests</option>
-                                    <option value="batched" selected>Web3.js Batched Requests</option>
-                                    <option value="sync" disabled>Synchronous Requests ( very bad idea )</option>
+                                    <option value="async" selected>Asynchronous Requests</option>
+                                    <option value="batched">Web3.js Batched Requests</option>
+                                    <option value="sync">Synchronous Requests ( very bad idea / Disabled )</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputProvider">Provider and Type ( on Ropsten )</label>
                                 <select id="inputProvider" class="form-control">
-                                    <option value="https://ropsten.infura.io/v3/cf4ef5272c3e459390943b6fc01f8ab8">HTTP - Infura.io</option>
+                                    <option value="https://ropsten.infura.io/v3/cf4ef5272c3e459390943b6fc01f8ab8" selected>HTTP - Infura.io</option>
                                     <option value="http://nowlive.ro/geth.ropsten">HTTP - nowlive.geth</option>
                                     <option value="http://nowlive.ro/parity.ropsten">HTTP - nowlive.parity</option>
-                                    <option value="wss://ropsten.infura.io/ws/v3/cf4ef5272c3e459390943b6fc01f8ab8" selected>WebSocket - Infura.io</option>
+                                    <option value="wss://ropsten.infura.io/ws/v3/cf4ef5272c3e459390943b6fc01f8ab8">WebSocket - Infura.io</option>
                                     <option value="ws://nowlive.ro/geth.ropsten.ws">WebSocket - nowlive.geth</option>
                                     <option value="ws://nowlive.ro/parity.ropsten.ws">WebSocket - nowlive.parity</option>
                                     <option value="custom">Custom ( enter below )</option>

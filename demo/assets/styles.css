@@ -1,0 +1,24 @@
+.container {
+    padding-top: 1.5rem;
+}
+
+.bd-title {
+    padding-top: 1.5rem;
+}
+
+.bd-example {
+    padding: 1.5rem;
+    border-width: .2rem;
+    
+    position: relative;
+    margin: 1rem 0 0;
+    border: solid #f8f9fa;
+}
+
+.bd-example .row {
+    line-height: 3.5rem;
+}
+
+.bd-example #zoom-result, .bd-example #web3-result {
+    line-height: 2rem;
+}

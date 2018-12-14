@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Zoom Demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="assets/styles.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+
+    <script src="assets/zoom.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Zoom Demo</h1>
+
+                <div class="bd-example">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputItemNum">Number of test items</label>
+                                <select id="inputItemNum" class="form-control">
+                                    <option value="250">250 ( 5000 calls ) </option>
+                                    <option value="200">200 ( 4000 calls ) </option>
+                                    <option value="150">150 ( 3000 calls ) </option>
+                                    <option value="100">100 ( 2000 calls ) </option>
+                                    <option value="50">50 ( 1000 calls ) </option>
+                                    <option value="25" selected>25 ( 500 calls ) </option>
+                                    <option value="10">10 ( 200 calls ) </option>
+                                    <option value="1">1 ( 20 calls ) </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputTestType">Request Type</label>
+                                <select id="inputTestType" class="form-control">
+                                    <option value="async">Asynchronous Requests</option>
+                                    <option value="batched" selected>Web3.js Batched Requests</option>
+                                    <option value="sync" disabled>Synchronous Requests ( very bad idea )</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputProvider">Provider and Type ( on Ropsten )</label>
+                                <select id="inputProvider" class="form-control">
+                                    <option value="https://ropsten.infura.io/v3/cf4ef5272c3e459390943b6fc01f8ab8">HTTP - Infura.io</option>
+                                    <option value="http://nowlive.ro/geth.ropsten">HTTP - nowlive.geth</option>
+                                    <option value="http://nowlive.ro/parity.ropsten">HTTP - nowlive.parity</option>
+                                    <option value="wss://ropsten.infura.io/ws/v3/cf4ef5272c3e459390943b6fc01f8ab8" selected>WebSocket - Infura.io</option>
+                                    <option value="ws://nowlive.ro/geth.ropsten.ws">WebSocket - nowlive.geth</option>
+                                    <option value="ws://nowlive.ro/parity.ropsten.ws">WebSocket - nowlive.parity</option>
+                                    <option value="custom">Custom ( enter below )</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <label for="inputProviderCustom">Custom Provider URL</label>
+                            <input type="text" class="form-control" id="inputProviderCustom" placeholder="ws://127.0.0.1:8545/" >
+                        </div>
+                    </form>
+                </div>
+
+
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="bd-title">Web3.js Demo</div>
+                <div class="bd-example">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-secondary bd-toggle-animated-progress" data-toggle="button" aria-pressed="false" autocomplete="off" id="run_web3">
+                                Load Data
+                            </button>
+                        </div>
+                        <div class="col" id="web3-result"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="bd-title">Zoom Demo</div>
+                <div class="bd-example">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-secondary bd-toggle-animated-progress" data-toggle="button" aria-pressed="false" autocomplete="off" id="run_zoom">
+                                Load Data
+                            </button>
+                        </div>
+                        <div class="col" id="zoom-result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
